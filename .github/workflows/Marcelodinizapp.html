@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcelo Diniz App 🛒</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f7f7f7;
+            padding: 15px;
+            max-width: 950px;
+            margin: auto;
+        }
+        header {
+            text-align: center;
+            background: #222;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 22px; margin-bottom: 5px; }
+        .subtitulo { font-size: 14px; opacity: 0.9; }
+        h2 {
+            color: #2b6cb0;
+            margin: 25px 0 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 18px;
+        }
+        .item-produto {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            margin: 6px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .comprado {
+            background-color: #e8ffeb;
+            text-decoration: line-through;
+            color: #666;
+        }
+        .nome {
+            font-weight: bold;
+            flex: 2;
+            min-width: 160px;
+            font-size: 15px;
+        }
+        input {
+            width: 75px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .subtotal {
+            font-weight: bold;
+            color: #2c5282;
+            min-width: 100px;
+            text-align: right;
+        }
+        button {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-marcar {
+            background: #28a745;
+            color: white;
+        }
+        .total-geral {
+            background: #222;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🛒 Lista de Compras</h1>
+    <div class="subtitulo">Marcelo Diniz App</div>
+</header>
+
+<!-- ==============================================
+     SEÇÃO 1: ITENS BÁSICOS ESSENCIAIS
+     ============================================== -->
+<h2>📦 Itens Básicos Essencial</h2>
+<div id="secao-basicos"></div>
+
+<!-- ==============================================
+     SEÇÃO 2: ITENS DE MISTURA / CARNES
+     ============================================== -->
+<h2>🥩 Itens de Mistura</h2>
+<div id="secao-mistura"></div>
+
+<!-- ==============================================
+     SEÇÃO 3: ITENS FRIOS
+     ============================================== -->
+<h2>🧀 Itens Frios</h2>
+<div id="secao-frios"></div>
+
+<!-- ==============================================
+     SEÇÃO 4: HIGIENE E LIMPEZA
+     ============================================== -->
+<h2>🧼 Higiene e Limpeza</h2>
+<div id="secao-higiene"></div>
+
+<!-- ==============================================
+     SEÇÃO 5: OPCIONAIS
+     ============================================== -->
+<h2>📋 Itens Opcionais</h2>
+<div id="secao-opcionais"></div>
+
+<!-- ==============================================
+     TOTAL GERAL
+     ============================================== -->
+<div class="total-geral">
+    TOTAL DA COMPRA: R$ <span id="total">0,00</span>
+</div>
+
+<footer>
+    Marcelo Diniz App ©
+</footer>
+
+<script>
+// ==============================================
+// LISTA COMPLETA COM TUDO O QUE VOCÊ ESCREVEU
+// ==============================================
+
+const listaBasicos = [
+    "Arroz",
+    "Feijão",
+    "Café",
+    "Açúcar",
+    "Macarrão",
+    "Molho de Tomate",
+    "Queijo Ralado",
+    "Farinha de Trigo",
+    "Farinha Temperada",
+    "Molho de Pimenta",
+    "Shoyu",
+    "Maionese",
+    "Atum",
+    "Miojo",
+    "Massa Pronta para Bolo",
+    "Bolacha Recheada",
+    "Bolacha Doce",
+    "Bolacha de Água e Sal",
+    "Tempero Sazón",
+    "Temperos Variados",
+    "Colorau",
+    "Alho",
+    "Iogurte",
+    "Leite",
+    "Creme de Leite",
+    "Leite Condensado",
+    "Sucrilhos",
+    "Manteiga",
+    "Papel Toalha",
+    "Polpa de Suco",
+    "Suco em Pó",
+    "Requeijão"
+];
+
+const listaMistura = [
+    "Cartela de Ovos",
+    "Hambúrguer",
+    "Frango",
+    "Stack",
+    "Carne Moída",
+    "Linguiça",
+    "Linguiça Calabresa",
+    "Carne Suína",
+    "Carne Bovina",
+    "Salchicha"
+];
+
+const listaFrios = [
+    "Mortadela",
+    "Muçarela",
+    "Presunto"
+];
+
+const listaHigiene = [
+    "Papel Higiênico",
+    "Sabão em Pó",
+    "Pasta de Dente",
+    "Gel de Cabelo",
+    "Anti Transpirante",
+    "Talco para Pé",
+    "Detergente",
+    "Candida",
+    "Amaciante",
+    "Shampoo",
+    "Creme de Cabelo",
+    "Desinfetante",
+    "Algodão",
+    "Escova de Dente",
+    "Gel Íntimo",
+    "Álcool",
+    "Pastilha para Vaso",
+    "Veja",
+    "Pedra de Sabão"
+];
+
+const listaOpcionais = [
+    "Item Opcional",
+    "Item Opcional",
+    "Item Opcional",
+    "Item Opcional"
+];
+
+let contadorId = 0;
+let itens = [];
+
+// ==============================================
+// INICIALIZA TODAS AS SEÇÕES
+// ==============================================
+function inicializar() {
+    criarSecao(listaBasicos, "secao-basicos");
+    criarSecao(listaMistura, "secao-mistura");
+    criarSecao(listaFrios, "secao-frios");
+    criarSecao(listaHigiene, "secao-higiene");
+    criarSecao(listaOpcionais, "secao-opcionais");
+}
+
+function criarSecao(lista, idContainer) {
+    const container = document.getElementById(idContainer);
+    container.innerHTML = "";
+
+    lista.forEach(nome => {
+        const id = contadorId++;
+        itens.push({
+            id: id,
+            nome: nome,
+            qt: 0,
+            preco: 0,
+            comprado: false
+        });
+
+        const div = document.createElement("div");
+        div.className = "item-produto";
+        div.id = `item-${id}`;
+        div.innerHTML = `
+            <span class="nome">${nome}</span>
+            <input type="number" placeholder="QT" min="0" onchange="atualizarQt(${id}, this.value)">
+            <input type="number" placeholder="R$" min="0" step="0.01" onchange="atualizarPreco(${id}, this.value)">
+            <span class="subtotal">R$ 0,00</span>
+            <button class="btn-marcar" onclick="marcar(${id})">✓</button>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// ==============================================
+// FUNÇÕES DE CÁLCULO E MARCAÇÃO
+// ==============================================
+function atualizarQt(id, valor) {
+    const item = itens.find(i => i.id === id);
+    if (item) {
+        item.qt = parseFloat(valor) || 0;
+        calcularTudo();
+    }
+}
+
+function atualizarPreco(id, valor) {
+    const item = itens.find(i => i.id === id);
+    if (item) {
+        item.preco = parseFloat(valor.replace(",", ".")) || 0;
+        calcularTudo();
+    }
+}
+
+function marcar(id) {
+    const div = document.getElementById(`item-${id}`);
+    div.classList.toggle("comprado");
+}
+
+function calcularTudo() {
+    let totalGeral = 0;
+    itens.forEach(item => {
+        const subtotal = item.qt * item.preco;
+        totalGeral += subtotal;
+        const div = document.getElementById(`item-${item.id}`);
+        div.querySelector(".subtotal").innerText = `R$ ${subtotal.toFixed(2)}`;
+    });
+    document.getElementById("total").innerText = totalGeral.toFixed(2);
+}
+
+// ==============================================
+// INICIA AO CARREGAR A PÁGINA
+// ==============================================
+window.onload = inicializar;
+</script>
+</body>
+</html>
